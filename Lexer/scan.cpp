@@ -1,7 +1,6 @@
 #include "defs.h"
-#include "decl.h"
 #include "data.h"
-
+#include "decl.h"
 
 // Return pos of char c in string s, or -1 if c not found 
 static int chrpos(const char *s, int c) {
@@ -14,7 +13,7 @@ static int chrpos(const char *s, int c) {
 
 // Get the next character from the input file 
 static int next(void) {
-    int c;
+    int c=0;
 
     if(Putback) {
         c = Putback ;
@@ -40,11 +39,9 @@ static void putback(int c) {
 
 static int skip(void) {
     int c;
+    do {
   c = next();
-
-  while(c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\f') {
-      c = next();
-  }
+    }while(c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\f');
 
   return c;
 }

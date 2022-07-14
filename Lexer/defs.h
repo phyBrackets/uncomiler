@@ -3,14 +3,15 @@
 #include <cctype>
 #include <cstdio>
 #include <iostream>
-int scan(struct token *t);
+int scan(class token *t);
 // Tokens 
 enum {
     T_PLUS, T_MINUS, T_STAR, T_SLASH, T_INTLIT
 };
 
-// Token structure
-struct token {
+// Token class
+class token {
+public: 
  int token;
  int intvalue;
 };

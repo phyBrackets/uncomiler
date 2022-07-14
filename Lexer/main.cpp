@@ -1,8 +1,7 @@
-#include "defs.h" 
-#include "data.h" 
+#include "defs.h"
+#include "data.h"
 #include "decl.h"
 #include <cerrno> 
-
 
 // Init the global var 
 static void init() {
