@@ -1,5 +1,7 @@
 #include "defs.h"
+#define extern_
 #include "data.h"
+#undef extern_
 #include "decl.h"
 #include <cerrno> 
 
@@ -22,13 +24,14 @@ static void usage(char *pr) {
      token T; 
 
      while(scan(&T)) {
-         std::cout << "Token " << tokstr[T.token] ;
+         std::cout << "Token " << tokstr[T.token]<< " " ;
          if(T.token == T_INTLIT)
-           std::cout << "value " << T.intvalue << "\n" ;
+           std::cout << ",value " << T.intvalue;
+        std::cout<<"\n";
      }
  }
 
-int main(int argc, char** argv) {
+int main(int argc, char* argv[]) {
   if(argc != 2)
     usage(argv[0]);
 

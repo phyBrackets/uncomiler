@@ -2,6 +2,6 @@
 #define extern_ extern
 #endif
 
-extern int     Line;
-extern int	Putback;
-extern FILE	*Infile;
+extern_ int     Line;
+extern_ int	Putback;
+extern_ FILE	*Infile;
