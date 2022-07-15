@@ -89,7 +89,8 @@ int scan (token *t) {
       break;
     
     case EOF: 
-      return 0;
+      t->token = T_EOF;
+      break;
     
     default: 
       // if it is digit 

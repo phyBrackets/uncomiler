@@ -17,21 +17,8 @@ static void usage(char *pr) {
     exit(1);
 }
 
-// List of tokens
- char const *tokstr[] = {"+", "-", "*", "/", "intlit"} ;
-
- static void scanfile() {
-     token T; 
-
-     while(scan(&T)) {
-         std::cout << "Token " << tokstr[T.token]<< " " ;
-         if(T.token == T_INTLIT)
-           std::cout << ",value " << T.intvalue;
-        std::cout<<"\n";
-     }
- }
-
 int main(int argc, char* argv[]) {
+  ASTNode *newast;
   if(argc != 2)
     usage(argv[0]);
 
@@ -42,6 +29,9 @@ int main(int argc, char* argv[]) {
       exit(1);
     }
 
-    scanfile();
+    scan(&Token);  // get the first token from the input
+    newast = binexpr();  // parse the expression
+    std::cout << interpretAST(newast) << "\n"; // calculate the final result
+
     exit(0);
 }
