@@ -1,4 +1,4 @@
-int scan(token *t); 
+int scanToken(token *t); 
 ASTNode *buildastnode(int op, ASTNode *left, 
                       ASTNode *right, int intvalue); 
 ASTNode *buildastleaf(int op, int intvalue);

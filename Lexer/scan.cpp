@@ -12,7 +12,7 @@ static int chrpos(const char *s, int c) {
 
 
 // Get the next character from the input file 
-static int next(void) {
+static int nextToken(void) {
     int c=0;
 
     if(Putback) {
@@ -40,7 +40,7 @@ static void putback(int c) {
 static int skip(void) {
     int c;
     do {
-  c = next();
+  c = nextToken();
     }while(c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\f');
 
   return c;
@@ -52,7 +52,7 @@ static int scanint(int c) {
     // convert ech char into an int 
     while((tmp = chrpos("0123456789", c)) >= 0) {
         Fint = Fint* 10 + tmp;
-        c = next() ;
+        c = nextToken() ;
     }
 
     // if we hit a non int char, put it back in stream
@@ -63,7 +63,7 @@ static int scanint(int c) {
 // Scan and return next token found in input . 
 // Return 1 if token valid , 0 if no tokens left 
 
-int scan (token *t) {
+int scanToken (token *t) {
   int c;
 
   // skip unwanted chars

@@ -11,7 +11,7 @@ static ASTNode *parsefactor(void) {
     switch(Token.token){
         case T_INTLIT:
         newastnode = buildastleaf(A_INTLIT, Token.intvalue);
-        scan(&Token);
+        scanToken(&Token);
         return (newastnode);
         default:
          std::cerr<<"syntax error on line \n" << Line ;
@@ -69,7 +69,7 @@ ASTNode *binexpr(int previoustokenprec) {
     // moore than that of the previous token precedence 
     while(op_precedence(tokentype) > previoustokenprec) {
       // fetch the next int literal 
-      scan(&Token);
+      scanToken(&Token);
 
       right = binexpr(OpPrec[tokentype]);
 

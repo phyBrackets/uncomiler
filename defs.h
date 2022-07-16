@@ -3,7 +3,7 @@
 #include <cctype>
 #include <cstdio>
 #include <iostream>
-int scan(class token *t);
+int scanToken(class token *t);
 // Tokens 
 enum {
     T_EOF, T_PLUS, T_MINUS, T_STAR, T_SLASH, T_INTLIT
