@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) {
     }
 
     scan(&Token);  // get the first token from the input
-    newast = binexpr();  // parse the expression
+    newast = binexpr(0);  // parse the expression
     std::cout << interpretAST(newast) << "\n"; // calculate the final result
 
     exit(0);

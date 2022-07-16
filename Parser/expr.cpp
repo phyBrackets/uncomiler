@@ -30,35 +30,55 @@ int arithmeticop(int tok) {
         case T_SLASH:
            return(A_DIVIDE);
         default:
-          std::cerr<< "unknown token on line \n" << Line << tok;
+          std::cerr<< "unknown token on line " << Line << "," << tok;
           exit(1);
     }
 }
 
-// Return an AST tree whose root is a binary op
 
-ASTNode *binexpr(void) {
+// operator precedence for each token 
+
+static int OpPrec[] = {0,10,10,20,20,0} ;
+// eof + - * / intlit
+
+static int op_precedence(int tokentype) {
+  int prec = OpPrec[tokentype] ;
+  if(prec==0) {
+    std::cerr << "syntax error on line" << Line << tokentype << "\n";
+    exit(1);
+  }
+
+  return prec;
+}
+// Return an AST tree whose root is a binary op
+// parameter previoustokenprec 
+ASTNode *binexpr(int previoustokenprec) {
     ASTNode *n, *left, *right ;
-    int nodetype;
+    int tokentype;
 
     //get the integer literal on the left 
     // fetch the next token at same time
     left = parsefactor();
-
+    
     // if no token left, return just the left node
-    if (Token.token == T_EOF)
+    tokentype = Token.token;
+    if (tokentype == T_EOF)
       return (left);
+    
+    // while the precedence of this token is
+    // moore than that of the previous token precedence 
+    while(op_precedence(tokentype) > previoustokenprec) {
+      // fetch the next int literal 
+      scan(&Token);
 
-    //convert the token into a node type 
-    nodetype = arithmeticop(Token.token);
+      right = binexpr(OpPrec[tokentype]);
 
-    //Get the next token 
-    scan(&Token);
+      left = buildastnode(arithmeticop(tokentype), left, right, 0);
+      
+      tokentype = Token.token;
+      if(Token.token == T_EOF)
+        return left;
+    }
 
-    // Recursively get the right hand side 
-    right = binexpr();
-
-    // now build a tree with both sub tree 
-    n = buildastnode(nodetype, left, right, 0);
-    return (n);
+    return left;
 }
