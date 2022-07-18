@@ -3,3 +3,5 @@
 + start with a language that has only five lexical elements:
 + for now the four basic maths operators:`+`,`-`,`*`,`/`
 + decimal whole numbers which have `1` or more digits `0 .. 9`
+
+Inspired by https://github.com/DoctorWkt/acwj 
