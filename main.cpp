@@ -28,10 +28,17 @@ int main(int argc, char* argv[]) {
       std::cerr << "Unable to open " << argv[1] << errno ;
       exit(1);
     }
+    
+    // Create the output file
+  if ((Outfile = fopen("out.s", "w")) == NULL) {
+    fprintf(stderr, "Unable to create out.s: %s\n", strerror(errno));
+    exit(1);
+  }
 
     scanToken(&Token);  // get the first token from the input
     newast = binexpr(0);  // parse the expression
     std::cout << interpretAST(newast) << "\n"; // calculate the final result
+    generateCode(newast);
 
     exit(0);
 }
