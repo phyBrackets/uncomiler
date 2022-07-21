@@ -4,7 +4,7 @@
 
 // given an AST, generate
 // assembly 
-static int genAST(ASTNode *n) {
+int genAST(ASTNode *n) {
   int leftreg, rightreg;
 
   // Get the left and right sub-tree values
@@ -30,10 +30,15 @@ static int genAST(ASTNode *n) {
   }
 }
 
-void generateCode(ASTNode *n) {
-    int reg;
-    cgpreamble();
-    reg = genAST(n);
-    cgprintint(reg); 
-    cgpostamble();
+void genpreamble() {
+  cgpreamble();
+}
+void genpostamble() {
+  cgpostamble();
+}
+void genfreeregs() {
+  freeall_registers();
+}
+void genprintint(int reg) {
+  cgprintint(reg);
 }

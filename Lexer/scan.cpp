@@ -60,11 +60,46 @@ static int scanint(int c) {
     return Fint ;
 }
 
+// scan an identifier from the input file and 
+// store it in buf[]. Return the identifier's length
+static int scanident(int c, char *buf, int lim) {
+  int i = 0;
+
+  // allow digits, alpha and underscores 
+   while(isalpha(c) || isdigit(c) || '_' == c) {
+     // error if we hit the identifier limit,
+     // else append to buf[] and get next character
+     if(lim-1 == i){
+      std::cout << "identifier too long on line " << Line << "\n";
+      exit(1);
+     } 
+     else if(i < lim-1)
+       buf[i++] = c;
+    
+    c = nextToken();
+   }
+
+   // we hit a non valid character, put it back.
+   putback(c);
+   buf[i] = '\0';
+   return i;
+}
+
+//scan keyword
+static int keyword(char *s) {
+   switch(*s) {
+     case 'p': 
+      if(!strcmp(s, "print"))
+        return (T_PRINT);
+      break;
+   }
+   return 0;
+}
 // Scan and return next token found in input . 
 // Return 1 if token valid , 0 if no tokens left 
 
 int scanToken (token *t) {
-  int c;
+  int c,tokentype;
 
   // skip unwanted chars
   c = skip();
@@ -91,6 +126,10 @@ int scanToken (token *t) {
     case EOF: 
       t->token = T_EOF;
       break;
+
+    case ';':
+      t->token = T_SEMI;
+      break;
     
     default: 
       // if it is digit 
@@ -99,6 +138,16 @@ int scanToken (token *t) {
           t->intvalue = scanint(c);
           t->token =T_INTLIT;
           break;
+      } else if (isalpha(c) || '_' == c) {
+        scanident(c, Text, TEXTLEN);
+
+        if((tokentype = keyword(Text))) {
+          t->token =  tokentype;
+          break;
+        }
+
+        std::cout << "Unrecognised symbol " << Text << "on line " << Line;
+        exit(1);
       }
       // will add more
 

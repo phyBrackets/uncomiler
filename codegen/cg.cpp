@@ -8,8 +8,7 @@ static const char *reglist[4] = {"%r8", "%r9", "%r10", "%r11"};
 
 // set all register as available
 void freeall_registers(void) {
-    for(int i=0;i <4; i++)
-     freereg[i] = 1;
+    freereg[0] = freereg[1] = freereg[2] = freereg[3] = 1;
 }
 
 // allocate free register
@@ -30,6 +29,7 @@ static void free_register(int reg) {
         std::cerr<< "error trying to free register" << reg << "\n";
         exit(1);
     }
+    freereg[reg] = 1;
 }
 
 // Print out the assembly preamble

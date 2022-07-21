@@ -36,9 +36,10 @@ int main(int argc, char* argv[]) {
   }
 
     scanToken(&Token);  // get the first token from the input
-    newast = binexpr(0);  // parse the expression
-    std::cout << interpretAST(newast) << "\n"; // calculate the final result
-    generateCode(newast);
+    genpreamble();
+    statements();
+    genpostamble();
+    fclose(Outfile);
 
     exit(0);
 }

@@ -62,7 +62,7 @@ ASTNode *binexpr(int previoustokenprec) {
     
     // if no token left, return just the left node
     tokentype = Token.token;
-    if (tokentype == T_EOF)
+    if (tokentype == T_SEMI)
       return (left);
     
     // while the precedence of this token is
@@ -76,7 +76,7 @@ ASTNode *binexpr(int previoustokenprec) {
       left = buildastnode(arithmeticop(tokentype), left, right, 0);
       
       tokentype = Token.token;
-      if(Token.token == T_EOF)
+      if(tokentype == T_SEMI)
         return left;
     }
 
